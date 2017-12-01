@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 <head>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-109874130-1"></script>
@@ -31,7 +40,7 @@
 			line-height:120px;
 		}
 		.boxed {
-			border-style:solid;
+
 		}
 		br{
 			width: 10px;
@@ -41,16 +50,28 @@
 <body>	
 <div class="banner">Is there space at eHub?</div>
 <div class="info">
-<br>Current density of eHub:</br>
-<div class = "boxed" align="center" style="width: 300px; height:50px; bottom:10px">
-<br><font color="red" size="+2">Full</font></br>
-</div>
-<div class = "boxed" align="center">
-<br><font color="#f4ce42" size="+2">Some spots open</font></br>
-</div>
-<div class = "boxed" align="center">
-<br><font color="green" size="+2">Many spots open</font></br>
-</div>
+	<br>Current density of eHub:</br>
+
+	<div class = "boxed">
+	<!-- <br><font color="red" size="+2">Full</font></br> -->
+	<br><h1><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>  
+	<span class="label label-danger" style="text-align: center">Full</span>
+	<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></h1></br>
+	</div>
+
+	<div class = "boxed">
+	<br><font color="#f4ce42" size="+2">Some spots open</font></br>
+	<!-- <br><h1><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>  
+	<span class="label label-warning" style="text-align: center">Some spots open</span>
+	<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></h1></br> -->
+	</div>
+
+	<div class = "boxed">
+	<br><font color="green" size="+2">Many spots open</font></br>
+	<!-- <br><h1><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>  
+	<span class="label label-success" style="text-align: center">Many spots open</span>
+	<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></h1></br> -->
+	</div>
 </div>
 
 <div><br>Density last updated on November 15th 00:00</br></div>
