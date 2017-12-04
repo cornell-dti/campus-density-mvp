@@ -20,9 +20,12 @@
 		gtag('config', 'UA-109874130-1');
 	</script>
 
-	<title>Is eHub full or not?</title>
+	<title>Campus Density</title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<style>
+		body, html {
+			height:100%;
+		}
 		body {
 			padding:0;
 			margin:0;
@@ -31,19 +34,25 @@
 			text-align: center;
 		}
 		.banner {
-			height:100px;
+			height:150px;
 			background:#4f4b49;
 			color:white;
 			text-align: left;
-			padding:5px;
-			padding-top:0px;
+			padding:25px;
 			font-size:54px;
-			line-height:95px;
+			line-height:100px;
 			font-family: -apple-system, BlinkMacSystemFont, inherit;
 		}
 		.info {
-			line-height:520px;
 			font-size:50px;
+			display: table;
+			height:500px;
+			overflow: hidden;
+			width:100%;
+		}
+		.vContent {
+			display: table-cell;
+			vertical-align: middle;
 		}
 
 		h5{
@@ -52,41 +61,16 @@
 	</style>
 </head>
 <body>	
-<div class="banner">
-<b>Campus Density</b>
-<a href="http://cornelldti.org">
-<img src ="http://cornelldti.org/img/logos/cornelldti.png" width="375px" height="100px" align="right">
-</a>
-</div>
-<div class="info">
-	<h2>
-	<div class = "info">There are currently <span class="label label-warning">some</span> spots open at eHub.</div>
-	</h2>
-	<div><h5>Density last updated on November 15th 00:00</h5></div>
-<!--
-	<div class = "boxed">
-	<br><font color="red" size="+2">Many spots open</font></br>
-	<br><h1> 
-	<span class="label label-danger" style="text-align: center">Full</span>
-	<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></h1></br> 
+	<div class="banner">
+		<b>Campus Density</b>
+		<a href="http://cornelldti.org">
+			<img src ="http://cornelldti.org/img/logos/cornelldti.png" width="375px" height="100px" align="right">
+		</a>
 	</div>
-
-	<div class = "boxed">
-	<br><font color="#f4ce42" size="+2">Some spots open</font></br>
-	<br><h1> 
-	<span class="label label-warning" style="text-align: center">Some spots open</span>
-	</h1></br>
+	<div class="info">
+		<div class="vContent">
+			Coming soon...
+		</div>
 	</div>
-
-	<div class = "boxed">
-	<br><font color="green" size="+2">No spots open</font></br>
-	<br><h1>  
-	<span class="label label-success" style="text-align: center">Many spots open</span>
-	<span class="glyphicon glyphicon-hand-left" aria-hidden="true"></h1></br>
-	</div>
-	-->
-</div>
-
-<!--<br><a class="return" href="CDA.html">Main Menu</a></br>-->
 </body>
 </html>
