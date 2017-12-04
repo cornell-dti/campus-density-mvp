@@ -125,6 +125,16 @@
 			margin:0 3px;
 			cursor: pointer;
 		}
+
+		.form {
+			display:none;
+			width:300px;
+		}
+
+		.form input {
+			display:inline-block;
+			width: auto;
+		}
 	</style>
 </head>
 <body>	
@@ -142,6 +152,10 @@
 	</div>
 	<div class="useful">
 		was this useful? <a onclick="sendFeedback(1);"><span>yes</span></a>|<a onclick="sendFeedback(0);"><span>no</span></a>
+	</div>
+	<div class="useful form">
+		<input type="text" class="form-control" id="feedback" placeholder="How can this improve?">
+		<button type="button" class="btn btn-primary" onclick="submitTextFeedback()">Submit</button>
 	</div>
 	<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
 	<script>
@@ -178,6 +192,18 @@
 	  		$(".updatedAt").show()
 		});
 
+		function submitTextFeedback() {
+			var textFeedback = $("#feedback").val();
+			var newItem = firebase.database().ref('/feedback').push();
+			var d = new Date();
+			var ts = Math.round(d.getTime() / 1000);
+			newItem.set({
+				timestamp: ts,
+				text: textFeedback
+			});
+			$(".form").html("Thanks for the feedback!");
+		}
+
 		function sendFeedback(x) {
 			var newItem = firebase.database().ref('/feedback').push();
 			var d = new Date();
@@ -189,7 +215,8 @@
 			if (x == 1) {
 				$(".useful").html("Glad to hear it 😃");
 			} else {
-				$(".useful").html("Thanks for the feedback!");
+				$(".useful").hide();
+				$(".form").show();
 			}
 		}
 	</script>
