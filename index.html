@@ -61,6 +61,7 @@
 			width: 100%;
 			text-align: center;
 			display:none;
+			opacity:0.6;
 		}
 	</style>
 </head>
@@ -101,8 +102,12 @@
 	  		}
 	  		$(".status").html('There are currently ' + statusHTML + ' spots open at eHub Collegetown.');
 	  		var d = new Date(ts*1000);
-	  		var dateString = (d.getMonth()+1) + '/' + (d.getDate()) + ', ' + ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2);
-	  		$(".updatedAt").html('<h5>Density last updated on ' + dateString + '</h5><h5>Updates every 15 minutes!</h5>');
+	  		var actualHours = d.getHours() % 12;
+	  		if (actualHours == 0) actualHours = 12;
+	  		var postfix = "PM";
+	  		if (d.getHours() < 12) postfix = "AM";
+	  		var dateString = ('0'+actualHours).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ' ' + postfix + ', ' + (d.getMonth()+1) + '/' + (d.getDate());
+	  		$(".updatedAt").html('<h5>last updated at ' + dateString + '</h5>');
 	  		$(".updatedAt").show()
 		});
 	</script>
