@@ -126,7 +126,8 @@
 				var user = firebase.auth().currentUser;
 				if (user == null) return;
 				console.log("Attempting to write...");
-				var ts = Math.round((new Date()).getTime() / 1000);
+				var d = new Date();
+				var ts = Math.round(d.getTime() / 1000);
 				var newItem = database.ref('/history').push();
 				newItem.set({
 					status: status,
@@ -137,7 +138,14 @@
 					status: status,
 					timestamp: ts,
 				});
-				$(".updateStatus").text("Updated!");
+				var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+		  		var dayName = days[d.getDay()];
+		  		var actualHours = d.getHours() % 12;
+		  		if (actualHours == 0) actualHours = 12;
+		  		var postfix = "PM";
+		  		if (d.getHours() < 12) postfix = "AM";
+		  		var dateString = ('0'+actualHours).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ' ' + postfix + ', ' + dayName + ' ' + (d.getMonth()+1) + '/' + (d.getDate());
+				$(".updateStatus").text("Updated at " + dateString + "!");
 			  	$(".updateStatus").css("color", "green");
 			  	firebase.auth().signOut();
 			});
