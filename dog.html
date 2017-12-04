@@ -25,124 +25,7 @@
 
 	<title>Campus Density</title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<style>
-	
-		body, html {
-			height:100%;
-		}
-
-		body {
-			padding:0;
-			margin:0;
-			font-family: 'Open Sans', sans-serif;
-			background:white;
-			text-align: center;
-		}
-
-		.banner {
-			height:100px;
-			background:#333333;
-			color:white;
-			text-align: left;
-			padding:30px;
-			font-size:36px;
-			line-height:80px;
-			font-family: -apple-system, BlinkMacSystemFont, inherit;
-			text-decoration: none;
-		}
-
-		.info {
-			font-size:40px;
-			display: table;
-			height:500px;
-			width:100%;
-		}
-
-		.vContent {
-			display: table-cell;
-			vertical-align: middle;
-			position:relative;
-		}
-
-		.status {
-			padding-left: 20px;
-			padding-right:20px;
-		}
-
-		.small {
-			font-size:30px;
-		}
-
-		.updatedAt{
-			position: absolute;
-			bottom: 0;
-			width: 100%;
-			text-align: center;
-			display:none;
-			opacity:0.5;
-		}
-
-		.leftLabel {
-			position: absolute;
-		    left: 0;
-		    bottom: 0;
-		    padding: 10px;
-		    font-size:14px;
-		}
-
-		.leftLabel span {
-			margin: 0 3px;
-			cursor: pointer;
-			text-align: left;
-		}
-
-		@media screen and (max-width: 900px) {
-			.banner {
-				font-size:36px;
-				height:100px;
-				padding:10px;
-				line-height: 80px;
-			}
-			.banner img {
-				height:80px;
-				width:auto;
-			}
-			.info {
-				font-size:24px;
-			}
-			.small {
-				font-size:18px;
-			}
-		}
-
-		@media screen and (max-width:600px) {
-			.banner {
-				font-size:24px;
-				height:70px;
-				padding:10px;
-				line-height:50px;
-			}
-			.banner img {
-				height:50px;
-			}
-		}
-
-		@media screen and (max-width:400px) {
-			.banner {
-				font-size:18px;
-				height:50px;
-				padding:10px;
-				line-height:30px;
-			}
-			.banner img {
-				height:30px;
-			}
-			h5 {
-				font-size:8px;
-			}
-		}
-
-	</style>
+	<link href="style.css" rel="stylesheet">
 </head>
 <body>	
 
@@ -165,13 +48,18 @@
 	</div>
 
 	<script>
-
 		var adjectives = ['adorable', 'precious', 'wonderful', 'excellent', 'good', 'very good', 'beautiful'];
 		var randNum = Math.floor(Math.random() * adjectives.length);
 		var statusHTML = '<span class="label label-success">'+adjectives[randNum]+'</span>';
-		$(".status").html('There are currently ' + statusHTML + ' dogs at eHub Collegetown.');
+		var postfix = '🐶';
+		var d = new Date();
+		dogExists = true;
+		if (!dogExists){
+			statusHTML = '<span class="label label-warning">no</span>';
+			postfix = '😞';
+		}
+		$(".status").html('There are currently ' + statusHTML + ' dogs at eHub Collegetown. ' + postfix);
 
-		var d = new Date(ts*1000);
 		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 		var dayName = days[d.getDay()];
 		var actualHours = d.getHours() % 12;
