@@ -73,7 +73,7 @@
 	</div>
 	<div class="info">
 		<div class="vContent">
-			<div class="status">Consulting with our secret sources...🔮</div>
+			<div class="status">Checking with our secret sources...🔮</div>
 			<div class="updatedAt"></div>
 		</div>
 	</div>
@@ -102,7 +102,7 @@
 	  		$(".status").html('There are currently ' + statusHTML + ' spots open at eHub Collegetown.');
 	  		var d = new Date(ts*1000);
 	  		var dateString = (d.getMonth()+1) + '/' + (d.getDate()) + ', ' + ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2);
-	  		$(".updatedAt").html('<h5>Density last updated on ' + dateString + '</h5>');
+	  		$(".updatedAt").html('<h5>Density last updated on ' + dateString + '</h5><h5>Updates every 15 minutes!</h5>');
 	  		$(".updatedAt").show()
 		});
 	</script>
