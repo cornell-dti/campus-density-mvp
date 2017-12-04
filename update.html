@@ -114,7 +114,15 @@
 	  	firebase.initializeApp(config);
 	  	firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 	  	var database = firebase.database();
+
+	  	var savedStatus = -1;
+
 	  	function submit(status) {
+
+	  		// Reset auto-update timer, save latest status
+	  		savedStatus = status;
+	  		clearTimeout(timer);
+
 		  	email = $("#email").val();
 		  	password = $("#key").val();
 		  	firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
@@ -148,8 +156,26 @@
 				$(".updateStatus").text("Updated at " + dateString + "!");
 			  	$(".updateStatus").css("color", "green");
 			  	firebase.auth().signOut();
+
 			});
+
+			// Restart timer
+			timer = setInterval(autoUpdate, fifteenMinInMilli);
+
 		}
+
+		// Timer Functionality
+
+		var fifteenMinInMilli = 1000 * 60 * 15;
+		var timer = setInterval(autoUpdate, fifteenMinInMilli);
+
+		function autoUpdate() {
+    		if (savedStatus >= 0) {
+    			console.log("Auto-updating site with last status")
+    			submit(savedStatus);
+    		}
+		}
+
 	</script>
 </body>
 </html>

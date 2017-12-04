@@ -8,6 +8,12 @@
 		gtag('js', new Date());
 
 		gtag('config', 'UA-109874130-1');
+		gtag('event', 'Seen Feedback Form');
+
+		var trackOutboundLink = function(url) {
+		   	gtag('event', url);
+		   	window.location.href = url;
+		}
 	</script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -31,20 +37,20 @@
 			text-align: center;
 		}
 		.banner {
-			height:150px;
-			background:#4f4b49;
+			height:100px;
+			background:#333333;
 			color:white;
 			text-align: left;
-			padding:25px;
-			font-size:54px;
-			line-height:100px;
+			padding:30px;
+			font-size:36px;
+			line-height:80px;
 			font-family: -apple-system, BlinkMacSystemFont, inherit;
 		}
 		.info {
 			font-size:40px;
 			display: table;
-			height:500px;
 			width:100%;
+			height:500px;
 		}
 		.vContent {
 			display: table-cell;
@@ -60,11 +66,49 @@
 		}
 		.updatedAt{
 			position: absolute;
-			bottom: 0;
+			padding: 40px;
 			width: 100%;
 			text-align: center;
 			display:none;
-			opacity:0.6;
+			opacity:0.5;
+		}
+
+		.useful {
+			position: absolute;
+		    right: 0;
+		    bottom: 0;
+		    padding: 10px;
+		    font-size:14px;
+		}
+
+		.useful span {
+			margin:0 3px;
+			cursor: pointer;
+			text-align: right;
+		}
+
+		.leftLabel {
+			position: absolute;
+		    left: 0;
+		    bottom: 0;
+		    padding: 10px;
+		    font-size:14px;
+		}
+
+		.leftLabel span {
+			margin: 0 3px;
+			cursor: pointer;
+			text-align: left;
+		}
+
+		.form {
+			display:none;
+			width:300px;
+		}
+
+		.form input {
+			display:inline-block;
+			width: auto;
 		}
 
 		@media screen and (max-width: 900px) {
@@ -113,24 +157,13 @@
 			}
 		}
 
-		.useful {
-			position: absolute;
-		    right: 0;
-		    bottom: 0;
-		    padding: 10px;
-		    font-size:20px;
-		}
-
-		.useful span {
-			margin-left:10px;
-		}
 	</style>
 </head>
 <body>	
 	<div class="banner">
-		<b>Campus Density</b>
-		<a href="http://cornelldti.org">
-			<img src ="http://cornelldti.org/img/logos/cornelldti.png" width="375px" height="100px" align="right">
+		<a href="index.html" style="color: white; text-decoration: none;"><b>Campus Density</b></a>
+		<a href="http://cornelldti.org" onclick="trackOutboundLink('http://cornelldti.org'); return false;">
+			<img src ="http://cornelldti.org/img/logos/cornelldti.png" height="80px" align="right">
 		</a>
 	</div>
 	<div class="info">
@@ -139,9 +172,16 @@
 			<div class="updatedAt"></div>
 		</div>
 	</div>
-	<!--<div class="useful">
-		Useful? <span>👍</span> <span>👎</span>
-	</div>-->
+	<div class="leftLabel">
+		check eHub dog status <a href="dog.html">here</a>
+	</div>
+	<div class="useful">
+		was this useful? <a onclick="sendFeedback(1);"><span>yes</span></a>|<a onclick="sendFeedback(0);"><span>no</span></a>
+	</div>
+	<div class="useful form">
+		<input type="text" class="form-control" id="feedback" placeholder="How can this improve?">
+		<button type="button" class="btn btn-primary" onclick="submitTextFeedback()">Submit</button>
+	</div>
 	<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
 	<script>
 	  	// Initialize Firebase
@@ -176,6 +216,36 @@
 	  		$(".updatedAt").html('<h5>last updated at ' + dateString + '</h5>');
 	  		$(".updatedAt").show()
 		});
+
+		function submitTextFeedback() {
+			gtag('event', 'Seen Text Feedback');
+			var textFeedback = $("#feedback").val();
+			var newItem = firebase.database().ref('/feedback').push();
+			var d = new Date();
+			var ts = Math.round(d.getTime() / 1000);
+			newItem.set({
+				timestamp: ts,
+				text: textFeedback
+			});
+			$(".form").html("Thanks for the feedback!");
+		}
+
+		function sendFeedback(x) {
+			gtag('event', 'Sent Feedback: ' + x);
+			var newItem = firebase.database().ref('/feedback').push();
+			var d = new Date();
+			var ts = Math.round(d.getTime() / 1000);
+			newItem.set({
+				timestamp: ts,
+				value: x
+			});
+			if (x == 1) {
+				$(".useful").html("Glad to hear it! 😃");
+			} else {
+				$(".useful").hide();
+				$(".form").show();
+			}
+		}
 	</script>
 </body>
 </html>
