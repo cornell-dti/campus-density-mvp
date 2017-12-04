@@ -133,11 +133,13 @@
 	  		}
 	  		$(".status").html('There are currently ' + statusHTML + ' spots open at eHub Collegetown.');
 	  		var d = new Date(ts*1000);
+	  		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	  		var dayName = days[d.getDay()];
 	  		var actualHours = d.getHours() % 12;
 	  		if (actualHours == 0) actualHours = 12;
 	  		var postfix = "PM";
 	  		if (d.getHours() < 12) postfix = "AM";
-	  		var dateString = ('0'+actualHours).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ' ' + postfix + ', ' + (d.getMonth()+1) + '/' + (d.getDate());
+	  		var dateString = ('0'+actualHours).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ' ' + postfix + ', ' + dayName + ' ' + (d.getMonth()+1) + '/' + (d.getDate());
 	  		$(".updatedAt").html('<h5>last updated at ' + dateString + '</h5>');
 	  		$(".updatedAt").show()
 		});
