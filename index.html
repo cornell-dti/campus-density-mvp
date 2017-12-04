@@ -18,6 +18,13 @@
 		gtag('js', new Date());
 
 		gtag('config', 'UA-109874130-1');
+
+		var trackOutboundLink = function(url) {
+		   ga('send', 'event', 'outbound', 'click', url, {
+		     'transport': 'beacon',
+		     'hitCallback': function(){document.location = url;}
+		   });
+		}
 	</script>
 
 	<title>Campus Density</title>
@@ -66,7 +73,7 @@
 <body>	
 	<div class="banner">
 		<b>Campus Density</b>
-		<a href="http://cornelldti.org">
+		<a href="http://cornelldti.org" onclick="trackOutboundLink('http://cornelldti.org'); return false;">
 			<img src ="http://cornelldti.org/img/logos/cornelldti.png" width="375px" height="100px" align="right">
 		</a>
 	</div>
