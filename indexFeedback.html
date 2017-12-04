@@ -8,6 +8,12 @@
 		gtag('js', new Date());
 
 		gtag('config', 'UA-109874130-1');
+		gtag('event', 'Seen Feedback Form');
+
+		var trackOutboundLink = function(url) {
+		   	gtag('event', url);
+		   	window.location.href = url;
+		}
 	</script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -124,6 +130,7 @@
 		.useful span {
 			margin:0 3px;
 			cursor: pointer;
+			text-align: right;
 		}
 
 		.form {
@@ -140,7 +147,7 @@
 <body>	
 	<div class="banner">
 		<b>Campus Density</b>
-		<a href="http://cornelldti.org">
+		<a href="http://cornelldti.org" onclick="trackOutboundLink('http://cornelldti.org'); return false;">
 			<img src ="http://cornelldti.org/img/logos/cornelldti.png" width="375px" height="100px" align="right">
 		</a>
 	</div>
@@ -193,6 +200,7 @@
 		});
 
 		function submitTextFeedback() {
+			gtag('event', 'Seen Text Feedback');
 			var textFeedback = $("#feedback").val();
 			var newItem = firebase.database().ref('/feedback').push();
 			var d = new Date();
@@ -205,6 +213,7 @@
 		}
 
 		function sendFeedback(x) {
+			gtag('event', 'Sent Feedback: ' + x);
 			var newItem = firebase.database().ref('/feedback').push();
 			var d = new Date();
 			var ts = Math.round(d.getTime() / 1000);
@@ -213,7 +222,7 @@
 				value: x
 			});
 			if (x == 1) {
-				$(".useful").html("Glad to hear it 😃");
+				$(".useful").html("Glad to hear it! 😃");
 			} else {
 				$(".useful").hide();
 				$(".form").show();
