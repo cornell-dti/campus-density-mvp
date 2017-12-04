@@ -2,4 +2,4 @@
 
 ## v0 - eHub Collegetown
 
-![eHub Advertisement](/Ad.png?raw=true "eHub Advertisement")
+![eHub Advertisement](/img/ad.png?raw=true "eHub Advertisement")
