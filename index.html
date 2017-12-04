@@ -8,15 +8,13 @@
 		gtag('js', new Date());
 
 		gtag('config', 'UA-109874130-1');
-
-		var trackOutboundLink = function(url) {
-		   	gtag('event', 'logoClick');
-		   	window.location.href = url;
-		}
 	</script>
-
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script
+	  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+	  crossorigin="anonymous"></script>
 
 	<title>Campus Density</title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -42,7 +40,7 @@
 			font-family: -apple-system, BlinkMacSystemFont, inherit;
 		}
 		.info {
-			font-size:50px;
+			font-size:40px;
 			display: table;
 			height:500px;
 			overflow: hidden;
@@ -51,28 +49,62 @@
 		.vContent {
 			display: table-cell;
 			vertical-align: middle;
+			padding:10px;
+			position:relative;
 		}
 		.small {
 			font-size:30px;
 		}
-
-		h5{
-			text-align: bottom;
+		.updatedAt{
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			text-align: center;
+			display:none;
 		}
 	</style>
 </head>
 <body>	
 	<div class="banner">
 		<b>Campus Density</b>
-		<a href="http://cornelldti.org" onclick="trackOutboundLink('http://cornelldti.org'); return false;">
+		<a href="http://cornelldti.org">
 			<img src ="http://cornelldti.org/img/logos/cornelldti.png" width="375px" height="100px" align="right">
 		</a>
 	</div>
 	<div class="info">
 		<div class="vContent">
-			Coming very soon...<br>
-			<span class="small">check back at 11am!</span>
+			<div class="status">Asking our secret sources... 🔮</div>
+			<div class="updatedAt"></div>
 		</div>
 	</div>
+	<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+	<script>
+	  	// Initialize Firebase
+	  	var config = {
+	    	apiKey: "AIzaSyClLb0vWYXilkLbHTn7XK1voslAQuPRi4I",
+	    	authDomain: "campus-density-mvp.firebaseapp.com",
+	    	databaseURL: "https://campus-density-mvp.firebaseio.com",
+	    	projectId: "campus-density-mvp",
+	    	storageBucket: "",
+	    	messagingSenderId: "789554059707"
+	  	};
+	  	firebase.initializeApp(config);
+	  	var database = firebase.database();
+	  	firebase.database().ref('/current').once('value').then(function(snapshot) {
+	  		const status = snapshot.val().status;
+	  		const ts = snapshot.val().timestamp;
+	  		var statusHTML = '<span class="label label-danger">no</span>';
+	  		if (status == 1) {
+	  			statusHTML = '<span class="label label-warning">some</span>';
+	  		} else if (status == 2) {
+	  			statusHTML = '<span class="label label-success">many</span>'
+	  		}
+	  		$(".status").html('There are currently ' + statusHTML + ' spots open at eHub Collegetown.');
+	  		var d = new Date(ts*1000);
+	  		var dateString = (d.getMonth()+1) + '/' + (d.getDate()) + ', ' + ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2);
+	  		$(".updatedAt").html('<h5>Density last updated on ' + dateString + '</h5><h5>Updates every 15 minutes!</h5>');
+	  		$(".updatedAt").show()
+		});
+	</script>
 </body>
 </html>
