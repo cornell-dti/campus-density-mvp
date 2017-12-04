@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script
+	  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+	  crossorigin="anonymous"></script>
+
+	<title>Campus Density</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<style>
+		body, html {
+			height:100%;
+		}
+		body {
+			padding:0;
+			margin:0;
+			font-family: 'Open Sans', sans-serif;
+			background:white;
+			text-align: center;
+		}
+		.banner {
+			height:150px;
+			background:#4f4b49;
+			color:white;
+			text-align: left;
+			padding:25px;
+			font-size:54px;
+			line-height:100px;
+			font-family: -apple-system, BlinkMacSystemFont, inherit;
+		}
+		.info {
+			font-size:40px;
+			display: table;
+			height:500px;
+			overflow: hidden;
+			width:100%;
+		}
+		.vContent {
+			display: table-cell;
+			vertical-align: middle;
+			padding:10px;
+			position:relative;
+		}
+		.small {
+			font-size:30px;
+		}
+		.updatedAt{
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			text-align: center;
+			display:none;
+		}
+
+		.form {
+			margin:20px;
+		}
+
+		.form input {
+			width: auto;
+			display: inline;
+		}
+
+		.label {
+			cursor:pointer;
+		}
+
+		.label:hover{
+			background: #000000;
+		}
+
+		.updateStatus {
+			color: green;
+			font-size: 18px;
+			margin-top:30px;
+		}
+	</style>
+</head>
+<body>	
+	<div class="banner">
+		<b>Campus Density</b>
+		<a href="http://cornelldti.org">
+			<img src ="http://cornelldti.org/img/logos/cornelldti.png" width="375px" height="100px" align="right">
+		</a>
+	</div>
+	<div class="info">
+		<div class="vContent">
+			<div class="form">
+				<input type="text" class="form-control" id="email" placeholder="Email Address">
+				<input type="password" class="form-control" id="key" placeholder="Shared Key">
+			</div>
+			How many spots?
+			<span class="label label-danger" onclick="submit(0);">none</span>
+			<span class="label label-warning" onclick="submit(1);">some</span>
+			<span class="label label-success" onclick="submit(2);">many</span>
+			<div class="updateStatus">
+
+			</div>
+		</div>
+	</div>
+	<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+	<script>
+	  	// Initialize Firebase
+	  	var config = {
+	    	apiKey: "AIzaSyClLb0vWYXilkLbHTn7XK1voslAQuPRi4I",
+	    	authDomain: "campus-density-mvp.firebaseapp.com",
+	    	databaseURL: "https://campus-density-mvp.firebaseio.com",
+	    	projectId: "campus-density-mvp",
+	    	storageBucket: "",
+	    	messagingSenderId: "789554059707"
+	  	};
+	  	firebase.initializeApp(config);
+	  	firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+	  	var database = firebase.database();
+	  	function submit(status) {
+		  	email = $("#email").val();
+		  	password = $("#key").val();
+		  	firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+			  	var errorMessage = error.message;
+			  	console.log(errorMessage);
+			  	$(".updateStatus").text(errorMessage);
+			  	$(".updateStatus").css("color", "red");
+			}).then(function() {
+				var user = firebase.auth().currentUser;
+				if (user == null) return;
+				console.log("Attempting to write...");
+				var ts = Math.round((new Date()).getTime() / 1000);
+				var newItem = database.ref('/history').push();
+				newItem.set({
+					status: status,
+					timestamp: ts,
+					user: user.email
+				});
+				database.ref('/current').set({
+					status: status,
+					timestamp: ts,
+				});
+				$(".updateStatus").text("Updated!");
+			  	$(".updateStatus").css("color", "green");
+			  	firebase.auth().signOut();
+			});
+		}
+	</script>
+</body>
+</html>
