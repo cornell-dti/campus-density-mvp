@@ -48,17 +48,25 @@
 	</div>
 
 	<script>
-		var adjectives = ['adorable', 'precious', 'wonderful', 'excellent', 'good', 'very good', 'beautiful'];
-		var randNum = Math.floor(Math.random() * adjectives.length);
-		var statusHTML = '<span class="label label-success">'+adjectives[randNum]+'</span>';
-		var postfix = '🐶';
+
+
 		var d = new Date();
+
+		// CHANGE DOG STATUS HERE
 		dogExists = false;
-		if (!dogExists){
+
+		if (!dogExists) {
 			statusHTML = '<span class="label label-warning">no</span>';
-			postfix = '😞';
+			var badAdverbs = ['tragically', 'sadly', 'unfortunately'];
+			var randNum = Math.floor(Math.random() * badAdverbs.length);
+			var statusHTML = '<span class="label label-warning">'+badAdverbs[randNum]+'</span>';
+			$(".status").html('There are ' + statusHTML + ' no dogs at eHub Collegetown. 😞');
+		} else {
+			var goodAdjectives = ['adorable', 'precious', 'wonderful', 'excellent', 'good', 'very good', 'beautiful', 'fantastic', 'great', 'glorious', 'amazing', 'marvelous', 'outstanding', 'stupendous'];
+			var randNum = Math.floor(Math.random() * goodAdjectives.length);
+			var statusHTML = '<span class="label label-success">'+adjectives[randNum]+'</span>';
+			$(".status").html('There are currently ' + statusHTML + ' dogs at eHub Collegetown. 🐶');
 		}
-		$(".status").html('There are currently ' + statusHTML + ' dogs at eHub Collegetown. ' + postfix);
 
 		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 		var dayName = days[d.getDay()];
