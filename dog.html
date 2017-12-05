@@ -49,9 +49,6 @@
 
 	<script>
 
-
-		var d = new Date();
-
 		// CHANGE DOG STATUS HERE
 		dogExists = false;
 
@@ -68,6 +65,7 @@
 			$(".status").html('There are currently ' + statusHTML + ' dogs at eHub Collegetown. 🐶');
 		}
 
+		var d = new Date();
 		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 		var dayName = days[d.getDay()];
 		var actualHours = d.getHours() % 12;
