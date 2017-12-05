@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	<div class="leftLabel">
-		check eHub dog status <a href="dog.html" onclick="trackOutboundLink('dog.html'); return false;">here</a>
+		<a href="dog.html" onclick="trackOutboundLink('dog.html'); return false;">🐶</a>
 	</div>
 	<div class="useful">
 		was this useful? <a onclick="sendFeedback(1);"><span>yes</span></a>|<a onclick="sendFeedback(0);"><span>no</span></a>
@@ -85,7 +85,7 @@
 		});
 
 		function submitTextFeedback() {
-			gtag('event', 'Seen Text Feedback');
+			/*gtag('event', 'Sent Text Feedback');
 			var textFeedback = $("#feedback").val();
 			var newItem = firebase.database().ref('/feedback').push();
 			var d = new Date();
@@ -93,19 +93,19 @@
 			newItem.set({
 				timestamp: ts,
 				text: textFeedback
-			});
+			});*/
 			$(".form").html("Thanks for the feedback!");
 		}
 
 		function sendFeedback(x) {
-			gtag('event', 'Sent Feedback: ' + x);
+			/*gtag('event', 'Sent Feedback: ' + x);
 			var newItem = firebase.database().ref('/feedback').push();
 			var d = new Date();
 			var ts = Math.round(d.getTime() / 1000);
 			newItem.set({
 				timestamp: ts,
 				value: x
-			});
+			});*/
 			if (x == 1) {
 				$(".useful").html("Glad to hear it! 😃");
 			} else {
