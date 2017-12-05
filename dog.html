@@ -64,7 +64,7 @@
 		} else {
 			var goodAdjectives = ['adorable', 'precious', 'wonderful', 'excellent', 'good', 'very good', 'beautiful', 'fantastic', 'great', 'glorious', 'amazing', 'marvelous', 'outstanding', 'stupendous'];
 			var randNum = Math.floor(Math.random() * goodAdjectives.length);
-			var statusHTML = '<span class="label label-success">'+adjectives[randNum]+'</span>';
+			var statusHTML = '<span class="label label-success">'+goodAdjectives[randNum]+'</span>';
 			$(".status").html('There are currently ' + statusHTML + ' dogs at eHub Collegetown. 🐶');
 		}
 
