@@ -68,7 +68,7 @@ body {
     left: 0;
     bottom: 0;
     padding: 10px;
-    font-size:14px;
+    font-size:36px;
 }
 
 .leftLabel span {
@@ -130,5 +130,9 @@ body {
 
 .banner a {
 	color: white;
+	text-decoration: none;
+}
+
+.leftLabel a:hover {
 	text-decoration: none;
 }
