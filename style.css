@@ -26,7 +26,7 @@ body {
 	display: table;
 	width:100%;
 	height:500px;
-	margin-top:100px;
+	margin-top:150px;
 }
 .vContent {
 	display: table-row;
@@ -155,7 +155,7 @@ body {
 
 .desc {
 	font-size:14px;
-	opacity:0.7;
+	opacity:0.8;
 	padding-right: 0;
 }
 
