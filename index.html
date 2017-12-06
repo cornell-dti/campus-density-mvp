@@ -6,10 +6,8 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
 		gtag('config', 'UA-109874130-1');
 		gtag('event', 'Seen Feedback Form');
-
 		var trackOutboundLink = function(url) {
 		   	gtag('event', url);
 		   	window.location.href = url;
@@ -43,7 +41,30 @@
 				<input type="text" class="form-control" id="feedback" placeholder="How can this improve?">
 				<button type="button" class="btn btn-primary" onclick="submitTextFeedback()">Submit</button>
 			</div>
+			
 		</div>
+		<div class = "vContent legend">
+			Legend
+			<table>
+			  <tr>
+			    <td><span class="label label-success" style="padding-left:11px; padding-right:11px">many</span></td>
+			    <td class="desc">you can sit almost anywhere, and nab a plug</td>
+			  </tr>
+			  <tr>
+			    <td><span class="label label-medium" style="padding-left:11px; padding-right:11px">some</span></td>
+			    <td class="desc">there's some spots here and there at some tables</td> 
+			  </tr>
+			  <tr>
+			    <td><span class="label label-warning" style="padding-left:11.75px; padding-right:11.75px">a few</span></td>
+			    <td class="desc">if you circle around both floors, you'll find something</td> 
+			  </tr>
+			  <tr>
+			    <td><span class="label label-danger" style="padding-left:20px; padding-right:20px"> no </span></td>
+			    <td class="desc">you'll have to grab an extra chair, or not have a table</td> 
+			  </tr>
+			</table>
+		</div>
+		
 	</div>
 	<div class="leftLabel">
 		<a href="dog.html" onclick="trackOutboundLink('dog.html'); return false;">🐶</a>
@@ -66,13 +87,15 @@
 	  	firebase.database().ref('/current').once('value').then(function(snapshot) {
 	  		const status = snapshot.val().status;
 	  		const ts = snapshot.val().timestamp;
-	  		var statusHTML = '<span class="label label-danger">a few</span>';
+	  		var statusHTML = '<span class="label label-danger">no</span>';
 	  		if (status == 1) {
-	  			statusHTML = '<span class="label label-warning">some</span>';
+	  			statusHTML = '<span class="label label-warning">a few</span>';
 	  		} else if (status == 2) {
-	  			statusHTML = '<span class="label label-success">many</span>'
+	  			statusHTML = '<span class="label label-medium">some</span>';
+	  		} else if (status == 3) {
+	  			statusHTML = '<span class="label label-success">many</span>';
 	  		}
-	  		$(".status").html('There are currently ' + statusHTML + ' spots open at eHub Collegetown.');
+	  		$(".status").html('There are ' + statusHTML + ' spots open at eHub Collegetown.');
 	  		var d = new Date(ts*1000);
 	  		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	  		var dayName = days[d.getDay()];
@@ -84,7 +107,6 @@
 	  		$(".updatedAt").html('<h5>last updated at ' + dateString + '</h5>');
 	  		$(".updatedAt").show()
 		});
-
 		function submitTextFeedback() {
 			/*gtag('event', 'Sent Text Feedback');
 			var textFeedback = $("#feedback").val();
@@ -97,7 +119,6 @@
 			});*/
 			$(".form").html("Thanks for the feedback!");
 		}
-
 		function sendFeedback(x) {
 			/*gtag('event', 'Sent Feedback: ' + x);
 			var newItem = firebase.database().ref('/feedback').push();
