@@ -26,7 +26,7 @@ body {
 	display: table;
 	width:100%;
 	height:500px;
-	margin-top:150px;
+	margin-top:125px;
 }
 .vContent {
 	display: table-row;
@@ -171,5 +171,4 @@ body {
 }
 
 .legendContent {
-	margin-top:50px;
 }
