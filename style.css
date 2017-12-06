@@ -52,10 +52,13 @@ body {
 
 .useful {
 	font-size: 20px;
-    position: absolute;
     padding: 40px;
     width: 100%;
     text-align: center;
+}
+
+.useful-text{
+	padding-bottom:0px;
 }
 
 .useful span {
@@ -155,7 +158,7 @@ body {
 
 .desc {
 	font-size:14px;
-	opacity:0.8;
+	opacity:0.9;
 	padding-right: 0;
 }
 
@@ -165,4 +168,8 @@ body {
 
 .label-warning {
 	background: #D28B01;
+}
+
+.legendContent {
+	margin-top:50px;
 }

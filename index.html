@@ -34,7 +34,7 @@
 	<div class="info">
 		<div class="vContent">
 			<div class="status">Asking our secret sources... 🔮</div>
-			<div class="useful">
+			<div class="useful useful-text">
 				was this useful? <a onclick="sendFeedback(1);"><span>yes</span></a>|<a onclick="sendFeedback(0);"><span>no</span></a>
 			</div>
 			<div class="useful form">
@@ -44,25 +44,27 @@
 			
 		</div>
 		<div class = "vContent legend">
-			Legend
-			<table>
-			  <tr>
-			    <td><span class="label label-success" style="padding-left:11px; padding-right:11px">many</span></td>
-			    <td class="desc">you can sit almost anywhere, and nab a plug</td>
-			  </tr>
-			  <tr>
-			    <td><span class="label label-medium" style="padding-left:11px; padding-right:11px">some</span></td>
-			    <td class="desc">there's some spots here and there at some tables</td> 
-			  </tr>
-			  <tr>
-			    <td><span class="label label-warning" style="padding-left:11.75px; padding-right:11.75px">a few</span></td>
-			    <td class="desc">if you circle around both floors, you'll find something</td> 
-			  </tr>
-			  <tr>
-			    <td><span class="label label-danger" style="padding-left:20px; padding-right:20px"> no </span></td>
-			    <td class="desc">you'll have to grab an extra chair, or not have a table</td> 
-			  </tr>
-			</table>
+			<div class="legendContent">
+				Legend
+				<table>
+				  <tr>
+				    <td><span class="label label-success" style="padding-left:11px; padding-right:11px">many</span></td>
+				    <td class="desc">you can sit almost anywhere, and nab a plug</td>
+				  </tr>
+				  <tr>
+				    <td><span class="label label-medium" style="padding-left:11px; padding-right:11px">some</span></td>
+				    <td class="desc">there's some spots here and there at some tables</td> 
+				  </tr>
+				  <tr>
+				    <td><span class="label label-warning" style="padding-left:11.75px; padding-right:11.75px">a few</span></td>
+				    <td class="desc">if you circle around both floors, you'll find something</td> 
+				  </tr>
+				  <tr>
+				    <td><span class="label label-danger" style="padding-left:20px; padding-right:20px"> no </span></td>
+				    <td class="desc">you'll have to grab an extra chair, or not have a table</td> 
+				  </tr>
+				</table>
+			</div>
 		</div>
 		
 	</div>
@@ -108,7 +110,7 @@
 	  		$(".updatedAt").show()
 		});
 		function submitTextFeedback() {
-			/*gtag('event', 'Sent Text Feedback');
+			gtag('event', 'Sent Text Feedback');
 			var textFeedback = $("#feedback").val();
 			var newItem = firebase.database().ref('/feedback').push();
 			var d = new Date();
@@ -116,20 +118,22 @@
 			newItem.set({
 				timestamp: ts,
 				text: textFeedback
-			});*/
+			});
 			$(".form").html("Thanks for the feedback!");
 		}
 		function sendFeedback(x) {
-			/*gtag('event', 'Sent Feedback: ' + x);
+			gtag('event', 'Sent Feedback: ' + x);
 			var newItem = firebase.database().ref('/feedback').push();
 			var d = new Date();
 			var ts = Math.round(d.getTime() / 1000);
 			newItem.set({
 				timestamp: ts,
 				value: x
-			});*/
+			});
 			if (x == 1) {
-				$(".useful").html("Glad to hear it! 😃");
+				$(".useful-text").html("Glad to hear it! 😃");
+				$('#feedback').attr("placeholder","Any suggestions?");
+				$(".form").show();
 			} else {
 				$(".useful").hide();
 				$(".form").show();
