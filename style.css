@@ -26,9 +26,10 @@ body {
 	display: table;
 	width:100%;
 	height:500px;
+	margin-top:150px;
 }
 .vContent {
-	display: table-cell;
+	display: table-row;
 	vertical-align: middle;
 	position:relative;
 }
@@ -41,20 +42,23 @@ body {
 }
 .updatedAt{
 	position: absolute;
-	padding: 40px;
-	width: 100%;
-	text-align: center;
-	display:none;
-	opacity:0.5;
+    padding: 10px;
+    text-align: right;
+    display: none;
+    opacity: 0.5;
+    right: 0;
+    bottom: 0;
 }
 
 .useful {
-	position: absolute;
-    right: 0;
-    bottom: 0;
-    padding: 10px;
-    font-size:14px;
-    text-align: right;
+	font-size: 20px;
+    padding: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.useful-text{
+	padding-bottom:0px;
 }
 
 .useful span {
@@ -68,7 +72,7 @@ body {
     left: 0;
     bottom: 0;
     padding: 10px;
-    font-size:14px;
+    font-size:36px;
 }
 
 .leftLabel span {
@@ -79,7 +83,6 @@ body {
 
 .form {
 	display:none;
-	width:300px;
 }
 
 .form input {
@@ -131,4 +134,42 @@ body {
 .banner a {
 	color: white;
 	text-decoration: none;
+}
+
+.leftLabel a:hover {
+	text-decoration: none;
+}
+
+.legend {
+	font-size: 18px;
+    width: 100%;
+}
+
+.legend table {
+	margin: 0 auto;
+	margin-top:10px;
+}
+
+.legend td {
+	padding-bottom:10px;
+	padding-right:10px;
+	text-align:left;
+}
+
+.desc {
+	font-size:14px;
+	opacity:0.9;
+	padding-right: 0;
+}
+
+.label-medium {
+	background:#EEC03C;
+}
+
+.label-warning {
+	background: #D28B01;
+}
+
+.legendContent {
+	margin-top:50px;
 }
