@@ -36,19 +36,20 @@
 	<div class="info">
 		<div class="vContent">
 			<div class="status">Asking our secret sources... 🔮</div>
-			<div class="updatedAt"></div>
+			<div class="useful">
+				was this useful? <a onclick="sendFeedback(1);"><span>yes</span></a>|<a onclick="sendFeedback(0);"><span>no</span></a>
+			</div>
+			<div class="useful form">
+				<input type="text" class="form-control" id="feedback" placeholder="How can this improve?">
+				<button type="button" class="btn btn-primary" onclick="submitTextFeedback()">Submit</button>
+			</div>
 		</div>
 	</div>
 	<div class="leftLabel">
 		<a href="dog.html" onclick="trackOutboundLink('dog.html'); return false;">🐶</a>
 	</div>
-	<div class="useful">
-		was this useful? <a onclick="sendFeedback(1);"><span>yes</span></a>|<a onclick="sendFeedback(0);"><span>no</span></a>
-	</div>
-	<div class="useful form">
-		<input type="text" class="form-control" id="feedback" placeholder="How can this improve?">
-		<button type="button" class="btn btn-primary" onclick="submitTextFeedback()">Submit</button>
-	</div>
+	<div class="updatedAt"></div>
+	
 	<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
 	<script>
 	  	// Initialize Firebase

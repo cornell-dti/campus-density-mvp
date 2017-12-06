@@ -41,20 +41,20 @@ body {
 }
 .updatedAt{
 	position: absolute;
-	padding: 40px;
-	width: 100%;
-	text-align: center;
-	display:none;
-	opacity:0.5;
+    padding: 10px;
+    text-align: right;
+    display: none;
+    opacity: 0.5;
+    right: 0;
+    bottom: 0;
 }
 
 .useful {
-	position: absolute;
-    right: 0;
-    bottom: 0;
-    padding: 10px;
-    font-size:14px;
-    text-align: right;
+	font-size: 20px;
+    position: absolute;
+    padding: 40px;
+    width: 100%;
+    text-align: center;
 }
 
 .useful span {
@@ -79,7 +79,6 @@ body {
 
 .form {
 	display:none;
-	width:300px;
 }
 
 .form input {
