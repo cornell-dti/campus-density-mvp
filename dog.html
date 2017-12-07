@@ -49,8 +49,14 @@
 
 	<script>
 
-		// CHANGE DOG STATUS HERE
-		dogExists = false;
+		var now = new Date();
+	  	now.setTime(now.getTime() + (now.getTimezoneOffset()-300)*60*1000);
+	  	var dogExists = false;
+	  	if (now.getDay() >= 1 && now.getDay() <= 5) {
+	  		if (now.getHours() >= 10 && now.getHours() < 18) {
+	  			dogExists = true;
+	  		}
+	  	}
 
 		if (!dogExists) {
 			statusHTML = '<span class="label label-warning">no</span>';

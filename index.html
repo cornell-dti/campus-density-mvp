@@ -86,9 +86,17 @@
 	  	};
 	  	firebase.initializeApp(config);
 	  	var database = firebase.database();
-	  	firebase.database().ref('/current').once('value').then(function(snapshot) {
-	  		const status = snapshot.val().status;
-	  		const ts = snapshot.val().timestamp;
+	  	firebase.database().ref('/model').once('value').then(function(snapshot) {
+	  		var now = new Date();
+	  		now.setTime(now.getTime() + (now.getTimezoneOffset()-300)*60*1000);
+	  		var mins = now.getHours()*60 + now.getMinutes();
+	  		var mod = snapshot.val();
+	  		var status = -1;
+	  		for (var key in mod) {
+	  			if (key > mins) break;
+	  			status = mod[key];
+	  		}
+	  		status = 3-status;
 	  		var statusHTML = '<span class="label label-danger">no</span>';
 	  		if (status == 1) {
 	  			statusHTML = '<span class="label label-warning">a few</span>';
@@ -98,7 +106,7 @@
 	  			statusHTML = '<span class="label label-success">many</span>';
 	  		}
 	  		$(".status").html('There are ' + statusHTML + ' spots open at eHub Collegetown.');
-	  		var d = new Date(ts*1000);
+	  		var d = now;
 	  		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	  		var dayName = days[d.getDay()];
 	  		var actualHours = d.getHours() % 12;
