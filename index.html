@@ -34,15 +34,16 @@
 	<div class="info">
 		<div class="vContent">
 			<div class="status">Asking our secret sources... 🔮</div>
-			<div class="useful useful-text">
+			<!-- <div class="useful useful-text">
 				was this useful? <a onclick="sendFeedback(1);"><span>yes</span></a>|<a onclick="sendFeedback(0);"><span>no</span></a>
-			</div>
+			</div> -->
 			<div class="useful form">
 				<input type="text" class="form-control" id="feedback" placeholder="How can this improve?">
 				<button type="button" class="btn btn-primary" onclick="submitTextFeedback()">Submit</button>
 			</div>
 			
 		</div>
+		<!--
 		<div class = "vContent legend">
 			<div class="legendContent">
 				Legend
@@ -66,12 +67,15 @@
 				</table>
 			</div>
 		</div>
+		-->
 		
 	</div>
+	<!--
 	<div class="leftLabel">
 		<a href="dog.html" onclick="trackOutboundLink('dog.html'); return false;">🐶</a>
 	</div>
 	<div class="updatedAt"></div>
+	-->
 	
 	<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
 	<script>
@@ -105,7 +109,7 @@
 	  		} else if (status == 3) {
 	  			statusHTML = '<span class="label label-success">many</span>';
 	  		}
-	  		$(".status").html('There are ' + statusHTML + ' spots open at eHub Collegetown.');
+	  		$(".status").html('Thank you for using Campus Density! We will be back in the future.');
 	  		var d = now;
 	  		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	  		var dayName = days[d.getDay()];
