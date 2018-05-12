@@ -51,7 +51,7 @@ body {
 }
 
 .useful {
-	font-size: 20px;
+	font-size: 18px;
     padding: 40px;
     width: 100%;
     text-align: center;
@@ -181,4 +181,9 @@ body {
 .vote button:hover {
 	background:#5cb85c;
 	border-color: #5cb85c;
+}
+
+.vote-text {
+	margin-bottom:15px;
+	display: block;
 }
