@@ -41,7 +41,12 @@
 				<input type="text" class="form-control" id="feedback" placeholder="How can this improve?">
 				<button type="button" class="btn btn-primary" onclick="submitTextFeedback()">Submit</button>
 			</div>
-			
+			<div class="vote">
+				Where would you like to see Campus Density tomorrow?<br>
+				<button type="button" class="btn btn-danger" onClick="voteLocation(0);">Olin</button>
+				<button type="button" class="btn btn-danger" onClick="voteLocation(1);">Uris</button>
+				<button type="button" class="btn btn-danger" onClick="voteLocation(2);">Duffield</button>
+			</div>
 		</div>
 		<div class = "vContent legend">
 			<div class="legendContent">
@@ -146,6 +151,17 @@
 				$(".useful").hide();
 				$(".form").show();
 			}
+		}
+		// x = 0: Olin, x = 1: Uris, x = 2: Duffield
+		function voteLocation(x) {
+			var newItem = firebase.database().ref('/votes').push();
+			var d = new Date();
+			var ts = Math.round(d.getTime() / 1000);
+			newItem.set({
+				timestamp: ts,
+				value: x
+			});
+			$(".vote").html("Thanks for voting! We'll be back tomorrow 😃");
 		}
 	</script>
 </body>
