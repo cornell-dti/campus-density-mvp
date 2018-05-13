@@ -43,9 +43,9 @@
 			</div>
 			<div class="vote">
 				<span class="vote-text">Where would you like to see Campus Density tomorrow?</span>
-				<button type="button" class="btn btn-danger" onClick="voteLocation(0);">Olin</button>
-				<button type="button" class="btn btn-danger" onClick="voteLocation(1);">Uris</button>
-				<button type="button" class="btn btn-danger" onClick="voteLocation(2);">Duffield</button>
+				<button type="button" class="btn btn-danger" onClick="voteLocation(3);">Uris</button>
+				<button type="button" class="btn btn-danger" onClick="voteLocation(4);">Mann</button>
+				<button type="button" class="btn btn-danger" onClick="voteLocation(5);">Duffield</button>
 			</div>
 		</div>
 		<div class = "vContent legend">
@@ -112,7 +112,7 @@
 	  		$(".updatedAt").show()
 		});
 		function submitTextFeedback() {
-			gtag('event', 'Sent Text Feedback');
+			gtag('event', 'Sent Text Feedback (Olin)');
 			var textFeedback = $("#feedback").val();
 			var newItem = firebase.database().ref('/olin/feedback').push();
 			var d = new Date();
@@ -124,7 +124,7 @@
 			$(".form").html("Thanks for the feedback!");
 		}
 		function sendFeedback(x) {
-			gtag('event', 'Sent Feedback: ' + x);
+			gtag('event', 'Sent Feedback (Olin): ' + x);
 			var newItem = firebase.database().ref('/olin/feedback').push();
 			var d = new Date();
 			var ts = Math.round(d.getTime() / 1000);
@@ -151,7 +151,7 @@
 				value: x
 			});
 			$(".vote").html("Thanks for voting! We'll be back tomorrow 😃");
-			gtag('event', 'Location vote ' + x);
+			gtag('event', 'Location vote (Olin): ' + x);
 		}
 	</script>
 </body>
