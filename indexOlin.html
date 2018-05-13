@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-109874130-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-109874130-1');
+		gtag('event', 'Seen Feedback Form');
+		var trackOutboundLink = function(url) {
+		   	gtag('event', url);
+		   	window.location.href = url;
+		}
+	</script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script
+	  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+	  crossorigin="anonymous"></script>
+	<meta property="og:image" content="http://image.ibb.co/f5ZEPb/e_Hub_Ad_Copy_2.png" />
+	<title>Campus Density</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link href="style.css?version=2" rel="stylesheet">
+</head>
+<body>	
+	<div class="banner">
+		<a><b>Campus Density</b></a>
+		<a href="http://cornelldti.org" onclick="trackOutboundLink('http://cornelldti.org'); return false;">
+			<img src ="http://cornelldti.org/img/logos/cornelldti.png" height="80px" align="right">
+		</a>
+	</div>
+	<div class="info">
+		<div class="vContent">
+			<div class="status">Asking our secret sources... 🔮</div>
+			<div class="useful useful-text">
+				was this useful? <a onclick="sendFeedback(1);"><span>yes</span></a>|<a onclick="sendFeedback(0);"><span>no</span></a>
+			</div>
+			<div class="useful form">
+				<input type="text" class="form-control" id="feedback" placeholder="How can this improve?">
+				<button type="button" class="btn btn-primary" onclick="submitTextFeedback()">Submit</button>
+			</div>
+			<div class="vote">
+				<span class="vote-text">Where would you like to see Campus Density tomorrow?</span>
+				<button type="button" class="btn btn-danger" onClick="voteLocation(0);">Olin</button>
+				<button type="button" class="btn btn-danger" onClick="voteLocation(1);">Uris</button>
+				<button type="button" class="btn btn-danger" onClick="voteLocation(2);">Duffield</button>
+			</div>
+		</div>
+		<div class = "vContent legend">
+			<div class="legendContent">
+				Legend
+				<table>
+				  <tr>
+				    <td><span class="label label-success" style="padding-left:11px; padding-right:11px">many</span></td>
+				    <td class="desc">you can sit almost anywhere, and nab a plug</td>
+				  </tr>
+				  <tr>
+				    <td><span class="label label-medium" style="padding-left:11px; padding-right:11px">some</span></td>
+				    <td class="desc">there are some spots around, including at some tables</td> 
+				  </tr>
+				  <tr>
+				    <td><span class="label label-warning" style="padding-left:11.75px; padding-right:11.75px">a few</span></td>
+				    <td class="desc">if you circle around both floors, you'll find something</td> 
+				  </tr>
+				  <tr>
+				    <td><span class="label label-danger" style="padding-left:20px; padding-right:20px"> no </span></td>
+				    <td class="desc">you'll have to grab an extra chair, or not have a table</td> 
+				  </tr>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+	<div class="updatedAt"></div>
+	
+	<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+	<script>
+	  	// Initialize Firebase
+	  	var config = {
+	    	apiKey: "AIzaSyClLb0vWYXilkLbHTn7XK1voslAQuPRi4I",
+	    	authDomain: "campus-density-mvp.firebaseapp.com",
+	    	databaseURL: "https://campus-density-mvp.firebaseio.com",
+	    	projectId: "campus-density-mvp",
+	    	storageBucket: "",
+	    	messagingSenderId: "789554059707"
+	  	};
+	  	firebase.initializeApp(config);
+	  	var database = firebase.database();
+	  	firebase.database().ref('/olin/current').once('value').then(function(snapshot) {
+	  		var now = new Date();
+	  		now.setTime(now.getTime() + (now.getTimezoneOffset()-240)*60*1000);
+	  		var mins = now.getHours()*60 + now.getMinutes();
+	  		var mod = snapshot.val();
+	  		var status = -1;
+	  		for (var key in mod) {
+	  			if (key > mins) break;
+	  			status = mod[key];
+	  		}
+	  		status = 3-status;
+	  		var statusHTML = '<span class="label label-danger">no</span>';
+	  		if (status == 1) {
+	  			statusHTML = '<span class="label label-warning">a few</span>';
+	  		} else if (status == 2) {
+	  			statusHTML = '<span class="label label-medium">some</span>';
+	  		} else if (status == 3) {
+	  			statusHTML = '<span class="label label-success">many</span>';
+	  		}
+	  		$(".status").html('There are ' + statusHTML + ' spots open at Olin Library.');
+	  		var d = now;
+	  		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	  		var dayName = days[d.getDay()];
+	  		var actualHours = d.getHours() % 12;
+	  		if (actualHours == 0) actualHours = 12;
+	  		var postfix = "PM";
+	  		if (d.getHours() < 12) postfix = "AM";
+	  		var dateString = ('0'+actualHours).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ' ' + postfix + ', ' + dayName + ' ' + (d.getMonth()+1) + '/' + (d.getDate());
+	  		$(".updatedAt").html('<h5>last updated at ' + dateString + '</h5>');
+	  		$(".updatedAt").show()
+		});
+		function submitTextFeedback() {
+			gtag('event', 'Sent Text Feedback');
+			var textFeedback = $("#feedback").val();
+			var newItem = firebase.database().ref('/olin/feedback').push();
+			var d = new Date();
+			var ts = Math.round(d.getTime() / 1000);
+			newItem.set({
+				timestamp: ts,
+				text: textFeedback
+			});
+			$(".form").html("Thanks for the feedback!");
+		}
+		function sendFeedback(x) {
+			gtag('event', 'Sent Feedback: ' + x);
+			var newItem = firebase.database().ref('/olin/feedback').push();
+			var d = new Date();
+			var ts = Math.round(d.getTime() / 1000);
+			newItem.set({
+				timestamp: ts,
+				value: x
+			});
+			if (x == 1) {
+				$(".useful-text").html("Glad to hear it! 😃");
+				$('#feedback').attr("placeholder","Any suggestions?");
+				$(".form").show();
+			} else {
+				$(".useful").hide();
+				$(".form").show();
+			}
+		}
+		// x = 0: Olin, x = 1: Uris, x = 2: Duffield
+		function voteLocation(x) {
+			var newItem = firebase.database().ref('/olin/votes').push();
+			var d = new Date();
+			var ts = Math.round(d.getTime() / 1000);
+			newItem.set({
+				timestamp: ts,
+				value: x
+			});
+			$(".vote").html("Thanks for voting! We'll be back tomorrow 😃");
+			gtag('event', 'Location vote ' + x);
+		}
+	</script>
+</body>
+</html>

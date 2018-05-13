@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-109874130-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-109874130-1');
+		var trackOutboundLink = function(url) {
+		   	gtag('event', url);
+		   	window.location.href = url;
+		}
+	</script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script
+	  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+	  crossorigin="anonymous"></script>
+
+	<title>Campus Density</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<style>
+		body, html {
+			height:100%;
+		}
+		body {
+			padding:0;
+			margin:0;
+			font-family: 'Open Sans', sans-serif;
+			background:white;
+			text-align: center;
+		}
+		.banner {
+			height:150px;
+			background:#4f4b49;
+			color:white;
+			text-align: left;
+			padding:25px;
+			font-size:54px;
+			line-height:100px;
+			font-family: -apple-system, BlinkMacSystemFont, inherit;
+		}
+		.info {
+			font-size:40px;
+			display: table;
+			height:500px;
+			overflow: hidden;
+			width:100%;
+		}
+		.vContent {
+			display: table-cell;
+			vertical-align: middle;
+			padding:10px;
+			position:relative;
+		}
+		.small {
+			font-size:30px;
+		}
+		.updatedAt{
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			text-align: center;
+			display:none;
+		}
+
+		.form {
+			margin:20px;
+		}
+
+		.form input {
+			width: auto;
+			display: inline;
+		}
+
+		.label {
+			cursor:pointer;
+		}
+
+		.label:hover{
+			background: #000000;
+		}
+
+		.updateStatus {
+			color: green;
+			font-size: 18px;
+			margin-top:30px;
+		}
+
+		
+		.label-medium {
+			background:#EEC03C;
+		}
+
+		.label-warning {
+			background: #D28B01;
+		}
+	</style>
+</head>
+<body>	
+	<div class="banner">
+		<b>Campus Density</b>
+		<a href="http://cornelldti.org">
+			<img src ="http://cornelldti.org/img/logos/cornelldti.png" width="375px" height="100px" align="right">
+		</a>
+	</div>
+	<div class="info">
+		<div class="vContent">
+			<div class="form">
+				<input type="text" class="form-control" id="email" placeholder="Email Address">
+				<input type="password" class="form-control" id="key" placeholder="Key">
+			</div>
+			How many spots?
+			<span class="label label-danger" onclick="submit(0);">no</span>
+			<span class="label label-warning" onclick="submit(1);">a few</span>
+			<span class="label label-medium" onclick="submit(2);">some</span>
+			<span class="label label-success" onclick="submit(3);">many</span>
+			<div class="updateStatus">
+
+			</div>
+		</div>
+	</div>
+	<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+	<script>
+	  	// Initialize Firebase
+	  	var config = {
+	    	apiKey: "AIzaSyClLb0vWYXilkLbHTn7XK1voslAQuPRi4I",
+	    	authDomain: "campus-density-mvp.firebaseapp.com",
+	    	databaseURL: "https://campus-density-mvp.firebaseio.com",
+	    	projectId: "campus-density-mvp",
+	    	storageBucket: "",
+	    	messagingSenderId: "789554059707"
+	  	};
+	  	firebase.initializeApp(config);
+	  	firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+	  	var database = firebase.database();
+
+	  	var savedStatus = -1;
+
+	  	function submit(status) {
+
+	  		gtag('event', 'Updated Olin', {'label': status});
+
+	  		// Reset auto-update timer, save latest status
+	  		savedStatus = status;
+	  		clearTimeout(timer);
+
+		  	email = $("#email").val();
+		  	password = $("#key").val();
+		  	firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+			  	var errorMessage = error.message;
+			  	console.log(errorMessage);
+			  	$(".updateStatus").text(errorMessage);
+			  	$(".updateStatus").css("color", "red");
+			}).then(function() {
+				var user = firebase.auth().currentUser;
+				if (user == null) return;
+				console.log("Attempting to write...");
+				var d = new Date();
+				var ts = Math.round(d.getTime() / 1000);
+				var newItem = database.ref('/history').push();
+				newItem.set({
+					status: status,
+					timestamp: ts,
+					user: user.email
+				});
+				database.ref('/current').set({
+					status: status,
+					timestamp: ts,
+				});
+				var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+		  		var dayName = days[d.getDay()];
+		  		var actualHours = d.getHours() % 12;
+		  		if (actualHours == 0) actualHours = 12;
+		  		var postfix = "PM";
+		  		if (d.getHours() < 12) postfix = "AM";
+		  		var dateString = ('0'+actualHours).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ' ' + postfix + ', ' + dayName + ' ' + (d.getMonth()+1) + '/' + (d.getDate());
+				$(".updateStatus").text("Updated at " + dateString + "!");
+			  	$(".updateStatus").css("color", "green");
+			  	firebase.auth().signOut();
+
+			});
+
+			// Restart timer
+			timer = setInterval(autoUpdate, fifteenMinInMilli);
+
+		}
+
+		// Timer Functionality
+
+		var fifteenMinInMilli = 1000 * 60 * 15;
+		var timer = setInterval(autoUpdate, fifteenMinInMilli);
+
+		function autoUpdate() {
+    		if (savedStatus >= 0) {
+    			console.log("Auto-updating site with last status")
+    			//submit(savedStatus);
+    		}
+		}
+
+	</script>
+</body>
+</html>
